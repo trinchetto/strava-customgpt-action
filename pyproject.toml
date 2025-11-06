@@ -1,0 +1,13 @@
+[tool.poetry]
+name = "strava-customgpt-action"
+version = "0.1.0"
+description = "A CustomGPT Action that connects to Strava and fetches information to be used for training follow-up and planning."
+authors = ["Marco Trincavelli <trinchetto@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+stravalib = "^2.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
