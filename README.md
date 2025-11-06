@@ -19,8 +19,26 @@ The script will:
 The script exports the resulting environment variables directly into your current shell. You still need to approve the application in your browser and paste back the authorization code when prompted.
 
 ## Run a sample script
-Once the `STRAVA_ACCESS_TOKEN` environment variable is set, run:
+Once the `STRAVA_ACCESS_TOKEN` environment variable is set, run the packaged CLI:
+
+```bash
+poetry run strava-recent-activities
+```
+
+Alternatively, you can call the compatibility script directly:
 
 ```bash
 python strava_recent_activities.py
 ```
+
+## Development
+
+- Install dependencies for development (including linters/type-checkers):
+  ```bash
+  poetry install --with dev
+  ```
+- Set up the pre-commit hooks locally:
+  ```bash
+  poetry run pre-commit install
+  ```
+- CI runs the same pre-commit configuration (Black, Ruff, Mypy) to keep formatting and checks consistent.
