@@ -55,6 +55,10 @@ The server exposes:
   ```bash
   poetry install --with dev
   ```
+- Run the automated test suite:
+  ```bash
+  poetry run pytest
+  ```
 - Set up the pre-commit hooks locally:
   ```bash
   poetry run pre-commit install

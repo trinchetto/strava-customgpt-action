@@ -99,13 +99,15 @@ def get_authenticated_client() -> Client:
     bundle = OAuthTokens.from_response(tokens)
     client.access_token = bundle.access_token
 
-    os.environ["STRAVA_ACCESS_TOKEN"] = bundle.access_token
-    if bundle.expires_at:
-        os.environ["STRAVA_ACCESS_TOKEN_EXPIRES_AT"] = str(
-            int(bundle.expires_at.timestamp())
-        )
-    if bundle.refresh_token:
-        os.environ["STRAVA_REFRESH_TOKEN"] = bundle.refresh_token
+    _persist_env_values(
+        {
+            "STRAVA_ACCESS_TOKEN": bundle.access_token,
+            "STRAVA_ACCESS_TOKEN_EXPIRES_AT": (
+                str(int(bundle.expires_at.timestamp())) if bundle.expires_at else None
+            ),
+            "STRAVA_REFRESH_TOKEN": bundle.refresh_token or None,
+        }
+    )
 
     return client
 
@@ -152,7 +154,7 @@ def run_authorization_cli() -> None:
 def _set_env_and_echo(
     *, client_id: str, client_secret: str, bundle: OAuthTokens
 ) -> None:
-    env_updates: dict[str, str] = {
+    env_updates: dict[str, str | None] = {
         "STRAVA_CLIENT_ID": client_id,
         "STRAVA_CLIENT_SECRET": client_secret,
         "STRAVA_REFRESH_TOKEN": bundle.refresh_token,
@@ -163,13 +165,22 @@ def _set_env_and_echo(
             int(bundle.expires_at.timestamp())
         )
 
-    for key, value in env_updates.items():
-        os.environ[key] = value
-        set_key(str(ENV_FILE), key, value)
+    _persist_env_values(env_updates)
 
     print("\nEnvironment variables set for this session:")
     for key, value in env_updates.items():
         print(f"  {key}={value}")
+
+
+def _persist_env_values(values: dict[str, str | None]) -> None:
+    ENV_FILE.parent.mkdir(parents=True, exist_ok=True)
+    if not ENV_FILE.exists():
+        ENV_FILE.touch()
+    for key, value in values.items():
+        if value is None:
+            continue
+        os.environ[key] = value
+        set_key(str(ENV_FILE), key, value)
 
 
 def _require_env(var_name: str) -> str:
