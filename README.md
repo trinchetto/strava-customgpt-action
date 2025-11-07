@@ -31,6 +31,25 @@ Alternatively, you can call the compatibility script directly:
 python strava_recent_activities.py
 ```
 
+## Expose a REST API
+
+The FastAPI surface lets you query Strava data from CustomGPT (or any HTTP client).
+
+```bash
+poetry run strava-activities-api
+# or without Poetry:
+python strava_recent_activities.py
+```
+
+Environment variables:
+- `API_HOST` (default `0.0.0.0`)
+- `API_PORT` (default `8000`)
+- `API_RELOAD` (set to `true`/`1` for hot reload during development)
+
+The server exposes:
+- `GET /health` for readiness checks
+- `GET /activities?limit=5` returning the latest Strava activities (requires `STRAVA_ACCESS_TOKEN`)
+
 ## Development
 
 - Install dependencies for development (including linters/type-checkers):

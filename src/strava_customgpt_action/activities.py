@@ -9,9 +9,10 @@ from collections.abc import Iterable
 
 from stravalib.client import Client
 from stravalib.exc import AccessUnauthorized
+from stravalib.model import Activity
 
 
-def fetch_recent_activities(limit: int = 3) -> list:
+def fetch_recent_activities(limit: int = 3) -> list[Activity]:
     """
     Fetch the most recent activities for the authenticated athlete.
 
@@ -31,7 +32,7 @@ def fetch_recent_activities(limit: int = 3) -> list:
     client.access_token = access_token
 
     try:
-        activities: Iterable = client.get_activities(limit=limit)
+        activities: Iterable[Activity] = client.get_activities(limit=limit)
     except AccessUnauthorized as exc:
         raise RuntimeError(
             "Authentication with Strava failed; refresh the access token."
