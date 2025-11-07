@@ -35,5 +35,8 @@ jobs:
       - name: Run pre-commit hooks
         run: poetry run pre-commit run --all-files
 
+      - name: Run pytest
+        run: poetry run pytest
+
       - name: Verify package import
         run: poetry run python -c "import strava_customgpt_action; print('import ok')"
