@@ -49,6 +49,35 @@ ignore_missing_imports = true
 strict_optional = true
 warn_unused_configs = true
 
+[tool.poetry.group.dev.dependencies]
+black = "^24.4"
+ruff = "^0.4"
+mypy = "^1.10"
+pre-commit = "^3.7"
+types-requests = "^2.32.0"
+
+[tool.poetry.scripts]
+strava-recent-activities = "strava_customgpt_action.cli:main"
+
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+src = ["src", "tests", "scripts"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E203", "E501"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+strict_optional = true
+warn_unused_configs = true
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
