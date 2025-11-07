@@ -13,7 +13,7 @@ from pydantic import BaseModel
 from .activities import fetch_recent_activities
 
 if TYPE_CHECKING:
-    from stravalib.model import Activity
+    from stravalib.model import SummaryActivity
 
 
 class ActivityPayload(BaseModel):
@@ -72,7 +72,7 @@ def create_app() -> FastAPI:
     return app
 
 
-def _serialize_activity(activity: Activity) -> dict[str, Any]:
+def _serialize_activity(activity: SummaryActivity) -> dict[str, Any]:
     """
     Convert a stravalib activity object into serializable primitives.
     """

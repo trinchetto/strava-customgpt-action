@@ -13,6 +13,7 @@ python = "^3.12"
 stravalib = "^2.4"
 fastapi = "^0.115.0"
 uvicorn = { extras = ["standard"], version = "^0.30.0" }
+python-dotenv = "^1.0.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.4"
@@ -24,6 +25,7 @@ types-requests = "^2.32.0"
 [tool.poetry.scripts]
 strava-recent-activities = "strava_customgpt_action.cli:main"
 strava-activities-api = "strava_customgpt_action.server:main"
+strava-auth = "strava_customgpt_action.auth:main"
 
 [tool.black]
 line-length = 88
